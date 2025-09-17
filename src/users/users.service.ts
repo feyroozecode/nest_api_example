@@ -1,4 +1,6 @@
 import { Injectable } from "@nestjs/common";
+import { CreateUserDto } from "./dto/create-user-dto";
+import { UpdateUserDto } from "./dto/update-user-dto";
 
 @Injectable()
 export class UsersService {
@@ -41,7 +43,7 @@ export class UsersService {
      * @param user 
      * @returns 
      */
-    create(user: {name: string, email:string, role: 'intern' | 'engineer' | 'admin'}){
+    create(user:CreateUserDto){
         const userByHeighestd = [...this.users].sort((a,b) => b.id - a.id)[0];
         
         // if user with the same name 
@@ -60,7 +62,7 @@ export class UsersService {
      * @param updatedUser 
      * @returns 
      */
-    update(id: number, updatedUser: {name?:string, email?:string, role?: 'intern' | 'engineer' | 'admin'}){
+    update(id: number, updatedUser: UpdateUserDto){
         this.users = this.users.map(user => {
             if(user.id === id){
                 return {
