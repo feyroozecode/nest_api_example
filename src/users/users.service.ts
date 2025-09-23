@@ -32,6 +32,7 @@ export class UsersService {
            const rolesArray = this.users.filter(user => user.role === role); // Only return user with roles is passed
        
             if(rolesArray.length === 0) throw new NotFoundException(`User with role ${role} Not Found`);
+            
             return rolesArray;
         }    
        return this.users;
@@ -52,12 +53,12 @@ export class UsersService {
      * @returns 
      */
     create(user:CreateUserDto){
-        const userByHeighestd = [...this.users].sort((a,b) => b.id - a.id)[0];
+        const userByHeighestId = [...this.users].sort((a,b) => b.id - a.id)[0];
         
         // if user with the same name 
         if(this.users.find(u => u.name === user.name)) throw new Error('User already exists');
         const newUser = {
-            id: userByHeighestd.id + 1,
+            id: userByHeighestId.id + 1,
             ...user
         }
         this.users.push(newUser);
@@ -89,10 +90,10 @@ export class UsersService {
      * @returns 
      */
     delete(id: number){
-        const removedUser = this.findOne(id);
+        const userToRemove = this.findOne(id);
 
         this.users = this.users.filter(user => user.id !== id);
 
-        return removedUser;
+        return userToRemove;
     }
 }
